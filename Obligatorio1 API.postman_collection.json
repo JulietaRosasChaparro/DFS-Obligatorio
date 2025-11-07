@@ -1,0 +1,840 @@
+{
+	"info": {
+		"_postman_id": "afabe15a-4cb5-4fd1-a540-05da8a5405ff",
+		"name": "Obligatorio1 API",
+		"description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "48955306",
+		"_collection_link": "https://julietarosas2003-6564101.postman.co/workspace/Julieta-Rosas's-Workspace~499fe602-ee8e-4996-8bf1-2a0587eb9433/collection/48955306-afabe15a-4cb5-4fd1-a540-05da8a5405ff?action=share&source=collection_link&creator=48955306"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Registro sin contraseña",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"usuario1\",\r\n  \"email\": \"usuario1@mail.com\"\r\n}\r\n",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/auth/register",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Email inválido",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"juan\",\r\n  \"email\": \"correo-invalido\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/auth/register",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registro exitoso",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"juan\",\r\n  \"email\": \"juan@example.com\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/auth/register",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registro duplicado",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"juan\",\r\n  \"email\": \"juan@example.com\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/auth/register",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login con contraseña incorrecta",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"juan\",\r\n  \"password\": \"wrongpass\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/auth/login",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login con usuario inexistente",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"usuario_inexistente\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/auth/login",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login con campos vacíos",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"\",\r\n  \"password\": \"\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/auth/login",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login correcto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"username\": \"juan\",\r\n  \"password\": \"123456\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/auth/login",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Usuarios",
+			"item": [
+				{
+					"name": "Cambio exitoso",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTcwMTU0MywiZXhwIjoxNzU5Nzg3OTQzfQ.GYN5TukNuQcDMOXAh0nwLHcEVw818tOJDldVJZSMwvY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/usuarios/plan",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"usuarios",
+								"plan"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Usuario con plan premium",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTcwMTU0MywiZXhwIjoxNzU5Nzg3OTQzfQ.GYN5TukNuQcDMOXAh0nwLHcEVw818tOJDldVJZSMwvY",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/usuarios/plan",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"usuarios",
+								"plan"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Recetas",
+			"item": [
+				{
+					"name": "Crear receta sin token",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Pasta con salsa de tomate\",\r\n  \"descripcion\": \"Receta italiana casera.\",\r\n  \"categoria\": \"6702b3f3abc123456789abcd\",\r\n  \"ingredientes\": [\r\n    { \"nombre\": \"Tomate\", \"cantidad\": 200, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Pasta\", \"cantidad\": 250, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Aceite de oliva\", \"cantidad\": 2, \"unidad\": \"cucharadas\" }\r\n  ],\r\n  \"pasos\": [\r\n    \"Hervir la pasta al dente.\",\r\n    \"Preparar la salsa.\",\r\n    \"Mezclar y servir caliente.\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear receta con token incorrecto",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJpbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NzQ5MCwiZXhwIjoxNzU5ODczODkwfQ.JilypZNoDV8lMrIz6Ee0C2O5gjkzHcJ8W_Q7j3V-Amk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Pasta con salsa de tomate\",\r\n  \"descripcion\": \"Receta italiana casera.\",\r\n  \"categoria\": \"6702b3f3abc123456789abcd\",\r\n  \"ingredientes\": [\r\n    { \"nombre\": \"Tomate\", \"cantidad\": 200, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Pasta\", \"cantidad\": 250, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Aceite de oliva\", \"cantidad\": 2, \"unidad\": \"cucharadas\" }\r\n  ],\r\n  \"pasos\": [\r\n    \"Hervir la pasta al dente.\",\r\n    \"Preparar la salsa.\",\r\n    \"Mezclar y servir caliente.\"\r\n  ]\r\n}"
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear receta exito",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NjA1MSwiZXhwIjoxNzU5ODcyNDUxfQ.0qkaoaMDFrITX3LnmVO2-Tj57ThKtJUXpXFoyihDnfk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Pasta con salsa de tomate\",\r\n  \"descripcion\": \"Una receta italiana tradicional con salsa casera.\",\r\n  \"categoria\": \"Italiana\",\r\n  \"ingredientes\": [\r\n    { \"nombre\": \"Tomate\", \"cantidad\": 200, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Pasta\", \"cantidad\": 250, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Aceite de oliva\", \"cantidad\": 2, \"unidad\": \"cucharadas\" },\r\n    { \"nombre\": \"Sal\", \"cantidad\": 1, \"unidad\": \"cucharadita\" }\r\n  ],\r\n  \"pasos\": [\r\n    \"Hervir la pasta hasta que esté al dente.\",\r\n    \"Preparar la salsa con tomates y aceite de oliva.\",\r\n    \"Mezclar la salsa con la pasta y servir caliente.\"\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener recetas con token incorrecto",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJpbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NzQ5MCwiZXhwIjoxNzU5ODczODkwfQ.JilypZNoDV8lMrIz6Ee0C2O5gjkzHcJ8W_Q7j3V-Amk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener recetas del usuario exito",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NjA1MSwiZXhwIjoxNzU5ODcyNDUxfQ.0qkaoaMDFrITX3LnmVO2-Tj57ThKtJUXpXFoyihDnfk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar receta con id inexistente",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NzQ5MCwiZXhwIjoxNzU5ODczODkwfQ.JilypZNoDV8lMrIz6Ee0C2O5gjkzHcJ8W_Q7j3V-Amk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Pasta al pesto revisada\",\r\n  \"descripcion\": \"Receta actualizada con más detalles\",\r\n  \"ingredientes\": [\r\n    { \"nombre\": \"Pasta\", \"cantidad\": 200, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Albahaca\", \"cantidad\": 50, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Aceite de oliva\", \"cantidad\": 30, \"unidad\": \"ml\" }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas/6702b3f3abc123456789abcd",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas",
+								"6702b3f3abc123456789abcd"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar receta sin token",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"titulo\": \"Pasta al pesto revisada\",\r\n  \"descripcion\": \"Receta actualizada con más detalles\",\r\n  \"ingredientes\": [\r\n    { \"nombre\": \"Pasta\", \"cantidad\": 200, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Albahaca\", \"cantidad\": 50, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Aceite de oliva\", \"cantidad\": 30, \"unidad\": \"ml\" }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas/68e4371ec63dfa8cacca4717",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas",
+								"68e4371ec63dfa8cacca4717"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar receta exito",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NjA1MSwiZXhwIjoxNzU5ODcyNDUxfQ.0qkaoaMDFrITX3LnmVO2-Tj57ThKtJUXpXFoyihDnfk",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"descripcion\": \"Versión mejorada: con albahaca fresca y queso parmesano.\",\r\n  \"ingredientes\": [\r\n    { \"nombre\": \"Tomate\", \"cantidad\": 250, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Pasta\", \"cantidad\": 250, \"unidad\": \"g\" },\r\n    { \"nombre\": \"Queso parmesano\", \"cantidad\": 50, \"unidad\": \"g\" }\r\n  ]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas/68e4371ec63dfa8cacca4717",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas",
+								"68e4371ec63dfa8cacca4717"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar receta con id inexistente",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NjA1MSwiZXhwIjoxNzU5ODcyNDUxfQ.0qkaoaMDFrITX3LnmVO2-Tj57ThKtJUXpXFoyihDnfk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas/6702b3f3abc123456789aaa1",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas",
+								"6702b3f3abc123456789aaa1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar receta con id invalido",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NjA1MSwiZXhwIjoxNzU5ODcyNDUxfQ.0qkaoaMDFrITX3LnmVO2-Tj57ThKtJUXpXFoyihDnfk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas/abc123",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas",
+								"abc123"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar receta sin token",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas/68e4371ec63dfa8cacca4717",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas",
+								"68e4371ec63dfa8cacca4717"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar receta exito",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4NjA1MSwiZXhwIjoxNzU5ODcyNDUxfQ.0qkaoaMDFrITX3LnmVO2-Tj57ThKtJUXpXFoyihDnfk",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/v1/recetas/68e4371ec63dfa8cacca4717",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"recetas",
+								"68e4371ec63dfa8cacca4717"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Categorías",
+			"item": [
+				{
+					"name": "Crear categoría sin campo requeridlo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4OTUwMiwiZXhwIjoxNzU5ODc1OTAyfQ.D2L0GQ3zwm-WzkhMtITV0KSzRgANwBEnWYVzLiABfQ4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/categorias",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoria con nombre duplicado",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4OTUwMiwiZXhwIjoxNzU5ODc1OTAyfQ.D2L0GQ3zwm-WzkhMtITV0KSzRgANwBEnWYVzLiABfQ4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Italiana\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/categorias",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoria con formato invalido",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTc4OTUwMiwiZXhwIjoxNzU5ODc1OTAyfQ.D2L0GQ3zwm-WzkhMtITV0KSzRgANwBEnWYVzLiABfQ4",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Italiana\"",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/categorias",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Crear categoria exito",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTcwMjgzNiwiZXhwIjoxNzU5Nzg5MjM2fQ.nM6AK3eGwTJKBZSQDnjhLoSmw_2bIv43tXtPWBY6RKQ",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n  \"nombre\": \"Italiana\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{dev_base_url}}/v1/categorias",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Listar categorias exito",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4ZTJlM2VlNzcyY2Y3ZTBjNWE4MzVhYyIsInVzZXJuYW1lIjoianVhbiIsImlhdCI6MTc1OTcwMjgzNiwiZXhwIjoxNzU5Nzg5MjM2fQ.nM6AK3eGwTJKBZSQDnjhLoSmw_2bIv43tXtPWBY6RKQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{dev_base_url}}/v1/categorias",
+							"host": [
+								"{{dev_base_url}}"
+							],
+							"path": [
+								"v1",
+								"categorias"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "prod_base_url",
+			"value": ""
+		},
+		{
+			"key": "dev_base_url",
+			"value": ""
+		}
+	]
+}
