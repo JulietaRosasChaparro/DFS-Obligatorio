@@ -7,6 +7,8 @@ import ActualizarPlan from "../componentes/ActualizarPlan";
 import GraficoEstadisticas from "../componentes/GraficoEstadisticas";
 import { traducirError, textosCarga } from "../utils/traducciones";
 
+import { API_BASE } from "../config";
+
 export default function Dashboard() {
   const { user } = useSelector((state) => state.auth);
   const [recetas, setRecetas] = useState([]);
@@ -23,7 +25,7 @@ export default function Dashboard() {
       setCargando(true);
       const token = localStorage.getItem("token");
       
-      const res = await fetch("http://localhost:3000/v1/recetas", {
+      const res = await fetch(`${API_BASE}/recetas`, {
         headers: {
           "Authorization": `Bearer ${token}`
         }

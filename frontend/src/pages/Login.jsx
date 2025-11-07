@@ -4,6 +4,8 @@ import { loginStart, loginSuccess, loginFailure } from "../slices/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { traducirError, textosCarga, textosValidacion } from "../utils/traducciones";
 
+import { API_BASE } from "../config";
+
 export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -31,7 +33,7 @@ export default function Login() {
     dispatch(loginStart());
 
     try {
-      const res = await fetch("http://localhost:3000/v1/auth/login", {
+      const res = await fetch(`${API_BASE}/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),

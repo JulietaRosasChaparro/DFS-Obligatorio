@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { traducirError, textosCarga, textosConfirmacion } from "../utils/traducciones";
 
+import { API_BASE } from "../config";
+
 export default function ListaRecetas({ recetas, onRecetaDeleted, onRecetaUpdated }) {
   const [filtro, setFiltro] = useState("all");
   const [editandoId, setEditandoId] = useState(null);
@@ -34,7 +36,7 @@ export default function ListaRecetas({ recetas, onRecetaDeleted, onRecetaUpdated
     try {
       const token = localStorage.getItem("token");
       
-      const res = await fetch(`http://localhost:3000/v1/recetas/${recetaId}`, {
+      const res = await fetch(`${API_BASE}/recetas/${recetaId}`, {
         method: "DELETE",
         headers: {
           "Authorization": `Bearer ${token}`

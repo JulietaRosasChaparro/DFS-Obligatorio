@@ -4,6 +4,8 @@ import { loginStart, loginSuccess, loginFailure } from "../slices/authSlice";
 import { useNavigate, Link } from "react-router-dom";
 import { traducirError, textosCarga, textosValidacion } from "../utils/traducciones";
 
+import { API_BASE } from "../config";
+
 export default function Register() {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -38,7 +40,7 @@ export default function Register() {
     dispatch(loginStart());
 
     try {
-      const res = await fetch("http://localhost:3000/v1/auth/register", {
+      const res = await fetch(`${API_BASE}/auth/register`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, email, password }),

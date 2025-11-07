@@ -18,7 +18,6 @@ export default function GraficoEstadisticas({ recetas = [] }) {
   const mesesConDatos = Object.keys(estadisticasPorMes);
   const maxRecetas = Math.max(...Object.values(estadisticasPorMes), 1);
 
-  // Nombres de meses en español
   const nombresMeses = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
 
   return (
