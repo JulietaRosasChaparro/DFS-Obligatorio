@@ -21,9 +21,6 @@ export const API_ENDPOINTS = {
   // Recetas
   RECETAS: `${API_BASE_URL}/v1/recetas`,
   RECETA_BY_ID: (id) => `${API_BASE_URL}/v1/recetas/${id}`,
-  
-  // Health check
-  HEALTH: `${API_BASE_URL}/health`
 };
 
 console.log('🔧 API Base URL:', API_BASE_URL);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { traducirError, textosCarga, textosValidacion } from "../utils/traducciones";
 
-import { API_BASE } from "../config";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function FormularioReceta({ onRecetaAdded, currentRecetaCount, userPlan }) {
   const [titulo, setTitulo] = useState("");
@@ -48,7 +48,7 @@ export default function FormularioReceta({ onRecetaAdded, currentRecetaCount, us
         pasos: pasos.split('\n').filter(paso => paso.trim()),
       };
 
-      const res = await fetch(`${API_BASE}/recetas`, {
+      const res = await fetch(API_ENDPOINTS.RECETAS, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

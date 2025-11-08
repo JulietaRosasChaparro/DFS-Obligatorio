@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { loginSuccess } from "../slices/authSlice";
 import { traducirError, textosCarga, textosExito, textosConfirmacion } from "../utils/traducciones";
 
-import { API_BASE } from "../config";
+import { API_ENDPOINTS } from "../config/api";
 
 export default function ActualizarPlan({ currentPlan }) {
   const [cargando, setCargando] = useState(false);
@@ -31,7 +31,7 @@ export default function ActualizarPlan({ currentPlan }) {
     try {
       const token = localStorage.getItem("token");
       
-      const res = await fetch(`${API_BASE}/usuarios/plan`, {
+      const res = await fetch(API_ENDPOINTS.UPDATE_PLAN, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
