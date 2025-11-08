@@ -10,6 +10,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const { isMobile } = useSelector((state) => state.mobile);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -63,47 +64,53 @@ export default function Login() {
   return (
     <div
       style={{
-        maxWidth: 400,
-        margin: "80px auto",
-        padding: 30,
+        maxWidth: isMobile ? "90%" : 400,
+        margin: isMobile ? "40px auto" : "80px auto",
+        padding: isMobile ? 20 : 30,
         borderRadius: 12,
         boxShadow: "0 8px 30px rgba(0,0,0,0.15)",
         backgroundColor: "#fff",
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif",
       }}
     >
-      <h2 style={{ textAlign: "center", marginBottom: 25, color: "#333" }}>
+      <h2 style={{ 
+        textAlign: "center", 
+        marginBottom: 25, 
+        color: "#333",
+        fontSize: isMobile ? 20 : 24
+      }}>
         Iniciar sesión
       </h2>
 
-      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: 15 }}>
+      <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: isMobile ? 12 : 15 }}>
         <input
           placeholder="Usuario"
           value={username}
           onChange={(e) => setUsername(e.target.value)}
-          style={inputStyle}
+          style={inputStyle(isMobile)}
         />
         <input
           type="password"
           placeholder="Contraseña"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          style={inputStyle}
+          style={inputStyle(isMobile)}
         />
 
         <button
           type="submit"
           disabled={disabled}
           style={{
-            padding: 12,
+            padding: isMobile ? "14px" : 12,
             borderRadius: 8,
             border: "none",
             background: disabled ? "#ddd" : "#007bff",
             color: disabled ? "#aaa" : "#fff",
             cursor: disabled ? "not-allowed" : "pointer",
-            fontSize: 14,
+            fontSize: isMobile ? 15 : 14,
             fontWeight: "600",
-            transition: "all 0.3s ease"
+            transition: "all 0.3s ease",
+            minHeight: "44px"
           }}
         >
           {loading ? textosCarga.ingresando : "Ingresar"}
@@ -111,24 +118,34 @@ export default function Login() {
       </form>
 
       {errorMsg && (
-        <p style={{ color: "red", fontSize: 14, marginTop: 10, textAlign: "center" }}>
+        <p style={{ 
+          color: "red", 
+          fontSize: isMobile ? 13 : 14, 
+          marginTop: 10, 
+          textAlign: "center" 
+        }}>
           {errorMsg}
         </p>
       )}
 
-      <p style={{ marginTop: 20, textAlign: "center", fontSize: 14 }}>
+      <p style={{ 
+        marginTop: 20, 
+        textAlign: "center", 
+        fontSize: isMobile ? 13 : 14 
+      }}>
         ¿No tenés cuenta? <Link to="/register" style={{ color: "#007bff" }}>Registrarse</Link>
       </p>
     </div>
   );
 }
 
-const inputStyle = {
-  padding: 12,
+const inputStyle = (isMobile) => ({
+  padding: isMobile ? 14 : 12,
   borderRadius: 8,
   border: "1px solid #ddd",
   outline: "none",
-  fontSize: 14,
+  fontSize: isMobile ? 15 : 14,
   fontFamily: "inherit",
-  transition: "border-color 0.3s ease"
-};
+  transition: "border-color 0.3s ease",
+  minHeight: "44px"
+});

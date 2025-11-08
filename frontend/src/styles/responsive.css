@@ -1,0 +1,42 @@
+/* Estilos responsivos globales */
+@media (max-width: 768px) {
+  .mobile-hidden {
+    display: none !important;
+  }
+  
+  .mobile-full-width {
+    width: 100% !important;
+  }
+  
+  .mobile-text-center {
+    text-align: center !important;
+  }
+  
+  .mobile-padding {
+    padding: 10px !important;
+  }
+}
+
+/* Mejoras de touch para móviles */
+@media (hover: none) and (pointer: coarse) {
+  button, 
+  input, 
+  select, 
+  textarea {
+    min-height: 44px;
+  }
+  
+  .touch-target {
+    min-height: 44px;
+    min-width: 44px;
+  }
+}
+
+/* Prevenir zoom en inputs en iOS */
+@media screen and (max-width: 768px) {
+  input, 
+  select, 
+  textarea {
+    font-size: 16px;
+  }
+}

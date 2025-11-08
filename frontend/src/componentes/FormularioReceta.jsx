@@ -5,6 +5,7 @@ import { traducirError, textosCarga, textosValidacion } from "../utils/traduccio
 import { API_ENDPOINTS } from "../config/api";
 
 export default function FormularioReceta({ onRecetaAdded, currentRecetaCount, userPlan }) {
+  const { isMobile } = useSelector((state) => state.mobile);
   const [titulo, setTitulo] = useState("");
   const [descripcion, setDescripcion] = useState("");
   const [ingredientes, setIngredientes] = useState("");
@@ -78,9 +79,9 @@ export default function FormularioReceta({ onRecetaAdded, currentRecetaCount, us
 
   if (!puedeAgregarReceta) {
     return (
-      <div style={estiloContenedor}>
-        <h3 style={{ margin: "0 0 15px 0", color: "#333" }}>Agregar Receta</h3>
-        <p style={{ color: "#dc3545", margin: 0, fontSize: 14 }}>
+      <div style={estiloContenedor(isMobile)}>
+        <h3 style={{ margin: "0 0 15px 0", color: "#333", fontSize: isMobile ? 16 : 18 }}>Agregar Receta</h3>
+        <p style={{ color: "#dc3545", margin: 0, fontSize: isMobile ? 13 : 14 }}>
           {userPlan === "plus" 
             ? "Límite alcanzado (10 recetas). Actualiza a Premium para recetas ilimitadas."
             : "No se pueden agregar más recetas."
@@ -93,16 +94,16 @@ export default function FormularioReceta({ onRecetaAdded, currentRecetaCount, us
   const mostrarContador = userPlan === "plus" ? `${currentRecetaCount}/10 recetas` : `${currentRecetaCount} recetas`;
 
   return (
-    <div style={estiloContenedor}>
-      <h3 style={{ margin: "0 0 15px 0", color: "#333" }}>Agregar nueva receta</h3>
+    <div style={estiloContenedor(isMobile)}>
+      <h3 style={{ margin: "0 0 15px 0", color: "#333", fontSize: isMobile ? 16 : 18 }}>Agregar nueva receta</h3>
       
-      <form onSubmit={manejarEnvio} style={{ display: "flex", flexDirection: "column", gap: 15 }}>
+      <form onSubmit={manejarEnvio} style={{ display: "flex", flexDirection: "column", gap: isMobile ? 12 : 15 }}>
         <input
           type="text"
           placeholder="Título de la receta"
           value={titulo}
           onChange={(e) => setTitulo(e.target.value)}
-          style={estiloInput}
+          style={estiloInput(isMobile)}
           required
         />
         
@@ -110,25 +111,25 @@ export default function FormularioReceta({ onRecetaAdded, currentRecetaCount, us
           placeholder="Descripción de la receta"
           value={descripcion}
           onChange={(e) => setDescripcion(e.target.value)}
-          style={{ ...estiloInput, minHeight: 80, resize: "vertical" }}
+          style={{ ...estiloInput(isMobile), minHeight: isMobile ? 60 : 80, resize: "vertical" }}
         />
 
         <textarea
           placeholder="Ingredientes (separados por comas)"
           value={ingredientes}
           onChange={(e) => setIngredientes(e.target.value)}
-          style={{ ...estiloInput, minHeight: 60, resize: "vertical" }}
+          style={{ ...estiloInput(isMobile), minHeight: isMobile ? 50 : 60, resize: "vertical" }}
         />
 
         <textarea
           placeholder="Pasos de preparación (uno por línea)"
           value={pasos}
           onChange={(e) => setPasos(e.target.value)}
-          style={{ ...estiloInput, minHeight: 100, resize: "vertical" }}
+          style={{ ...estiloInput(isMobile), minHeight: isMobile ? 80 : 100, resize: "vertical" }}
         />
 
         {error && (
-          <p style={{ color: "red", fontSize: 14, margin: 0 }}>
+          <p style={{ color: "red", fontSize: isMobile ? 13 : 14, margin: 0, textAlign: "center" }}>
             {error}
           </p>
         )}
@@ -137,21 +138,22 @@ export default function FormularioReceta({ onRecetaAdded, currentRecetaCount, us
           type="submit"
           disabled={cargando || !titulo.trim()}
           style={{
-            padding: 12,
+            padding: isMobile ? "14px" : "12px",
             borderRadius: 8,
             border: "none",
             background: cargando || !titulo.trim() ? "#ddd" : "#28a745",
             color: cargando || !titulo.trim() ? "#aaa" : "#fff",
             cursor: cargando || !titulo.trim() ? "not-allowed" : "pointer",
-            fontSize: 14,
+            fontSize: isMobile ? 14 : 14,
             fontWeight: "600",
-            transition: "all 0.3s ease"
+            transition: "all 0.3s ease",
+            minHeight: "44px"
           }}
         >
           {cargando ? textosCarga.creando : "🍳 Crear Receta"}
         </button>
 
-        <p style={{ fontSize: 12, color: "#666", margin: 0, textAlign: "center" }}>
+        <p style={{ fontSize: isMobile ? 11 : 12, color: "#666", margin: 0, textAlign: "center" }}>
           {mostrarContador} (Plan {userPlan})
           {userPlan === "plus" && currentRecetaCount >= 8 && (
             <span style={{ color: "#dc3545", display: "block", marginTop: 5 }}>
@@ -164,20 +166,20 @@ export default function FormularioReceta({ onRecetaAdded, currentRecetaCount, us
   );
 }
 
-const estiloContenedor = {
-  padding: 20,
+const estiloContenedor = (isMobile) => ({
+  padding: isMobile ? 15 : 20,
   border: "1px solid #ddd",
   borderRadius: 12,
   backgroundColor: "#fff",
   boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
-};
+});
 
-const estiloInput = {
-  padding: 12,
+const estiloInput = (isMobile) => ({
+  padding: isMobile ? 12 : 12,
   borderRadius: 8,
   border: "1px solid #ddd",
   outline: "none",
-  fontSize: 14,
+  fontSize: isMobile ? 14 : 14,
   fontFamily: "inherit",
   transition: "border-color 0.3s ease"
-};
+});

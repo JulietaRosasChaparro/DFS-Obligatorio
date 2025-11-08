@@ -11,6 +11,7 @@ import { API_ENDPOINTS } from '../config/api';
 
 export default function Dashboard() {
   const { user } = useSelector((state) => state.auth);
+  const { isMobile } = useSelector((state) => state.mobile);
   const [recetas, setRecetas] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
@@ -77,27 +78,40 @@ export default function Dashboard() {
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" 
       }}>
         <div style={{ textAlign: "center" }}>
-          <p style={{ color: "#666", fontSize: 16 }}>{textosCarga.cargando}</p>
+          <p style={{ color: "#666", fontSize: isMobile ? 14 : 16 }}>{textosCarga.cargando}</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div style={{ padding: 20, minHeight: "100vh", backgroundColor: "#f8f9fa" }}>
+    <div style={{ 
+      padding: isMobile ? 10 : 20, 
+      minHeight: "100vh", 
+      backgroundColor: "#f8f9fa" 
+    }}>
       {/* Header */}
       <div style={{ 
-        marginBottom: 30,
-        padding: 20,
+        marginBottom: isMobile ? 20 : 30,
+        padding: isMobile ? 15 : 20,
         backgroundColor: "#fff",
         borderRadius: 12,
         boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
         border: "1px solid #ddd"
       }}>
-        <h1 style={{ margin: 0, color: "#333", fontSize: 28, fontWeight: "600" }}>
+        <h1 style={{ 
+          margin: 0, 
+          color: "#333", 
+          fontSize: isMobile ? 22 : 28, 
+          fontWeight: "600" 
+        }}>
           Mi libro de recetas
         </h1>
-        <p style={{ margin: "8px 0 0 0", color: "#666", fontSize: 16 }}>
+        <p style={{ 
+          margin: "8px 0 0 0", 
+          color: "#666", 
+          fontSize: isMobile ? 14 : 16 
+        }}>
           Bienvenido, <strong>{user?.username}</strong>!
         </p>
         <div style={{ 
@@ -111,7 +125,7 @@ export default function Dashboard() {
             backgroundColor: user?.plan === "premium" ? "#28a745" : "#007bff",
             color: "#fff",
             borderRadius: 20,
-            fontSize: 12,
+            fontSize: isMobile ? 10 : 12,
             fontWeight: "500"
           }}>
             Plan: {user?.plan?.toUpperCase() || "PLUS"}
@@ -121,7 +135,7 @@ export default function Dashboard() {
             backgroundColor: "#6c757d",
             color: "#fff",
             borderRadius: 20,
-            fontSize: 12,
+            fontSize: isMobile ? 10 : 12,
             fontWeight: "500"
           }}>
             Recetas: {recetas.length}
@@ -139,9 +153,11 @@ export default function Dashboard() {
           marginBottom: 20,
           display: "flex",
           justifyContent: "space-between",
-          alignItems: "center"
+          alignItems: "center",
+          flexDirection: isMobile ? "column" : "row",
+          gap: isMobile ? 10 : 0
         }}>
-          <span>{error}</span>
+          <span style={{ fontSize: isMobile ? 13 : 14 }}>{error}</span>
           <button
             onClick={recargarRecetas}
             style={{
@@ -151,7 +167,7 @@ export default function Dashboard() {
               border: "none",
               borderRadius: 4,
               cursor: "pointer",
-              fontSize: 12
+              fontSize: isMobile ? 11 : 12
             }}
           >
             Reintentar
@@ -159,37 +175,39 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Grid Principal */}
+      {/* Grid Principal - Responsivo */}
       <div style={{ 
         display: "grid", 
-        gridTemplateColumns: "1fr 1fr", 
-        gap: 20,
-        marginBottom: 30 
+        gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", 
+        gap: isMobile ? 15 : 20,
+        marginBottom: isMobile ? 20 : 30 
       }}>
         {/* Columna izquierda */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 15 : 20 }}>
           <FormularioReceta 
             onRecetaAdded={manejarRecetaAgregada}
             currentRecetaCount={recetas.length}
             userPlan={user?.plan || "plus"}
+            isMobile={isMobile}
           />
           
           <InformeUso 
             recetas={recetas}
             userPlan={user?.plan || "plus"}
+            isMobile={isMobile}
           />
         </div>
 
         {/* Columna derecha */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-          <ActualizarPlan currentPlan={user?.plan || "plus"} />
-          <GraficoEstadisticas recetas={recetas} />
+        <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 15 : 20 }}>
+          <ActualizarPlan currentPlan={user?.plan || "plus"} isMobile={isMobile} />
+          <GraficoEstadisticas recetas={recetas} isMobile={isMobile} />
         </div>
       </div>
 
       {/* Lista de recetas */}
       <div style={{
-        padding: 20,
+        padding: isMobile ? 15 : 20,
         backgroundColor: "#fff",
         borderRadius: 12,
         boxShadow: "0 2px 10px rgba(0,0,0,0.05)",
@@ -199,18 +217,23 @@ export default function Dashboard() {
           recetas={recetas}
           onRecetaDeleted={manejarRecetaEliminada}
           onRecetaUpdated={manejarRecetaActualizada}
+          isMobile={isMobile}
         />
       </div>
 
       {/* Footer informativo */}
       <div style={{ 
-        marginTop: 30,
+        marginTop: isMobile ? 20 : 30,
         padding: 15,
         backgroundColor: "#e9ecef",
         borderRadius: 8,
         textAlign: "center"
       }}>
-        <p style={{ margin: 0, color: "#6c757d", fontSize: 12 }}>
+        <p style={{ 
+          margin: 0, 
+          color: "#6c757d", 
+          fontSize: isMobile ? 11 : 12 
+        }}>
           💡 <strong>Tip:</strong> {user?.plan === "plus" 
             ? "Actualiza a Premium para recetas ilimitadas y más funcionalidades" 
             : "Disfruta de todos los beneficios Premium con recetas ilimitadas"

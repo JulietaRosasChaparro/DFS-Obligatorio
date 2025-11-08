@@ -2,6 +2,8 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { loginSuccess } from "./slices/authSlice";
+import ViewportListener from "./componentes/ViewportListener"; // Agrega esto
+import './styles/responsive.css';
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -14,7 +16,6 @@ export default function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Verificar si hay usuario en localStorage al cargar la app
     const storedUser = localStorage.getItem("user");
     const storedToken = localStorage.getItem("token");
     
@@ -42,25 +43,28 @@ export default function App() {
   }
 
   return (
-    <Routes>
-      <Route 
-        path="/" 
-        element={<Navigate to={user ? "/dashboard" : "/login"} replace />} 
-      />
-      <Route
-        path="/login"
-        element={user ? <Navigate to="/dashboard" replace /> : <Login />}
-      />
-      <Route
-        path="/register"
-        element={user ? <Navigate to="/dashboard" replace /> : <Register />}
-      />
-      <Route
-        path="/dashboard/*"
-        element={user ? <DashboardLayout /> : <Navigate to="/login" replace />}
-      >
-        <Route index element={<Dashboard />} />
-      </Route>
-    </Routes>
+    <>
+      <ViewportListener />
+      <Routes>
+        <Route 
+          path="/" 
+          element={<Navigate to={user ? "/dashboard" : "/login"} replace />} 
+        />
+        <Route
+          path="/login"
+          element={user ? <Navigate to="/dashboard" replace /> : <Login />}
+        />
+        <Route
+          path="/register"
+          element={user ? <Navigate to="/dashboard" replace /> : <Register />}
+        />
+        <Route
+          path="/dashboard/*"
+          element={user ? <DashboardLayout /> : <Navigate to="/login" replace />}
+        >
+          <Route index element={<Dashboard />} />
+        </Route>
+      </Routes>
+    </>
   );
 }

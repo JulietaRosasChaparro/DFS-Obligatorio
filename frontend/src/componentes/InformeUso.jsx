@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
+
 export default function InformeUso({ recetas = [], userPlan }) {
+  const { isMobile } = useSelector((state) => state.mobile);
   const recetasData = recetas || [];
   
   const totalRecetas = recetasData.length;
@@ -11,18 +14,18 @@ export default function InformeUso({ recetas = [], userPlan }) {
   const usoActual = userPlan === "plus" ? (totalRecetas / 10) * 100 : 100;
 
   return (
-    <div style={estiloContenedor}>
-      <h3 style={{ margin: "0 0 15px 0", color: "#333" }}>Informe de uso</h3>
+    <div style={estiloContenedor(isMobile)}>
+      <h3 style={{ margin: "0 0 15px 0", color: "#333", fontSize: isMobile ? 16 : 18 }}>Informe de uso</h3>
       
-      <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 15 : 20 }}>
         <div>
-          <h4 style={{ margin: "0 0 10px 0", fontSize: 14, color: "#666" }}>
+          <h4 style={{ margin: "0 0 10px 0", fontSize: isMobile ? 13 : 14, color: "#666" }}>
             Uso del plan {userPlan?.toUpperCase()}: {totalRecetas} {userPlan === "plus" ? `/ 10 recetas` : "recetas"}
           </h4>
           <div style={{ 
             background: "#e9ecef", 
             borderRadius: 10, 
-            height: 20,
+            height: isMobile ? 16 : 20,
             overflow: "hidden"
           }}>
             <div 
@@ -35,7 +38,7 @@ export default function InformeUso({ recetas = [], userPlan }) {
               }}
             />
           </div>
-          <p style={{ fontSize: 12, color: "#666", margin: "5px 0 0 0" }}>
+          <p style={{ fontSize: isMobile ? 11 : 12, color: "#666", margin: "5px 0 0 0" }}>
             {userPlan === "plus" 
               ? `${10 - totalRecetas} recetas disponibles`
               : "Recetas ilimitadas"
@@ -44,27 +47,32 @@ export default function InformeUso({ recetas = [], userPlan }) {
         </div>
 
         <div>
-          <h4 style={{ margin: "0 0 10px 0", fontSize: 14, color: "#666" }}>
+          <h4 style={{ margin: "0 0 10px 0", fontSize: isMobile ? 13 : 14, color: "#666" }}>
             Actividad del mes
           </h4>
           <div style={{ 
-            fontSize: 24, 
+            fontSize: isMobile ? 22 : 24, 
             fontWeight: "bold", 
             color: "#17a2b8",
             textAlign: "center"
           }}>
             {recetasEsteMes}
           </div>
-          <p style={{ fontSize: 12, color: "#666", textAlign: "center", margin: "5px 0 0 0" }}>
+          <p style={{ fontSize: isMobile ? 11 : 12, color: "#666", textAlign: "center", margin: "5px 0 0 0" }}>
             recetas creadas
           </p>
         </div>
 
         <div>
-          <h4 style={{ margin: "0 0 10px 0", fontSize: 14, color: "#666" }}>
+          <h4 style={{ margin: "0 0 10px 0", fontSize: isMobile ? 13 : 14, color: "#666" }}>
             Estadísticas
           </h4>
-          <div style={{ display: "flex", justifyContent: "space-between", fontSize: 12, color: "#666" }}>
+          <div style={{ 
+            display: "flex", 
+            justifyContent: "space-between", 
+            fontSize: isMobile ? 11 : 12, 
+            color: "#666" 
+          }}>
             <span>Total: {totalRecetas}</span>
             <span>Este mes: {recetasEsteMes}</span>
           </div>
@@ -74,10 +82,10 @@ export default function InformeUso({ recetas = [], userPlan }) {
   );
 }
 
-const estiloContenedor = {
-  padding: 20,
+const estiloContenedor = (isMobile) => ({
+  padding: isMobile ? 15 : 20,
   border: "1px solid #ddd",
   borderRadius: 12,
   backgroundColor: "#fff",
   boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
-};
+});
