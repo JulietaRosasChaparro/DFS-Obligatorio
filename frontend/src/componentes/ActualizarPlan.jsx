@@ -8,26 +8,39 @@ export default function ActualizarPlan({ currentPlan }) {
   const { isMobile } = useSelector((state) => state.mobile);
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
+  const [mostrarConfirmacion, setMostrarConfirmacion] = useState(false);
+  const [tipoMensaje, setTipoMensaje] = useState("");
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
+  const mostrarMensaje = (texto, tipo = "error") => {
+    setMensaje(texto);
+    setTipoMensaje(tipo);
+    setTimeout(() => {
+      setMensaje("");
+      setTipoMensaje("");
+    }, 5000);
+  };
+
   const manejarActualizacion = async () => {
     if (currentPlan === "premium") {
-      setMensaje(t("errors.plans.alreadyPremium"));
+      mostrarMensaje(t("errors.plans.alreadyPremium"));
       return;
     }
 
     if (currentPlan !== "plus") {
-      setMensaje(t("errors.plans.onlyPlusToPremium"));
+      mostrarMensaje(t("errors.plans.onlyPlusToPremium"));
       return;
     }
 
-    if (!window.confirm(t("confirmation.changePlan"))) {
-      return;
-    }
+    // Mostrar confirmación visual
+    setMostrarConfirmacion(true);
+  };
 
+  const confirmarActualizacion = async () => {
     setCargando(true);
     setMensaje("");
+    setMostrarConfirmacion(false);
 
     try {
       const token = localStorage.getItem("token");
@@ -55,14 +68,18 @@ export default function ActualizarPlan({ currentPlan }) {
       localStorage.setItem("user", JSON.stringify(usuarioActualizado));
       dispatch(loginSuccess({ user: usuarioActualizado, token }));
       
-      setMensaje(t("success.planUpdated"));
+      mostrarMensaje(t("success.planUpdated"), "success");
       
     } catch (error) {
       const errorTraducido = t(`errors.${obtenerClaveError(error.message)}`, error.message);
-      setMensaje(errorTraducido);
+      mostrarMensaje(errorTraducido);
     } finally {
       setCargando(false);
     }
+  };
+
+  const cancelarActualizacion = () => {
+    setMostrarConfirmacion(false);
   };
 
   const obtenerClaveError = (mensajeError) => {
@@ -122,9 +139,10 @@ export default function ActualizarPlan({ currentPlan }) {
             <li>⭐ Soporte prioritario</li>
           </ul>
           
+          {/* Botón de actualización */}
           <button
             onClick={manejarActualizacion}
-            disabled={cargando}
+            disabled={cargando || mostrarConfirmacion}
             style={{
               padding: isMobile ? "14px" : "12px 20px",
               border: "none",
@@ -141,6 +159,49 @@ export default function ActualizarPlan({ currentPlan }) {
           >
             {cargando ? t("loading.processing") : "🎯 Actualizar a Premium"}
           </button>
+
+          {/* Confirmación de actualización */}
+          {mostrarConfirmacion && (
+            <div style={{
+              padding: isMobile ? 15 : 20,
+              backgroundColor: "#fff3cd",
+              border: "1px solid #ffeaa7",
+              borderRadius: 8,
+              marginTop: 15
+            }}>
+              <p style={{ 
+                margin: "0 0 12px 0", 
+                color: "#856404",
+                fontSize: isMobile ? 14 : 15,
+                fontWeight: "500"
+              }}>
+                {t("confirmation.changePlan")}
+              </p>
+              <div style={{ display: "flex", gap: 10, flexWrap: isMobile ? "wrap" : "nowrap" }}>
+                <button
+                  onClick={confirmarActualizacion}
+                  disabled={cargando}
+                  style={{
+                    ...estiloBoton("#28a745", isMobile),
+                    opacity: cargando ? 0.6 : 1,
+                    flex: isMobile ? 1 : "none"
+                  }}
+                >
+                  {cargando ? t("loading.processing") : t("ui.confirm", "Confirmar")}
+                </button>
+                <button
+                  onClick={cancelarActualizacion}
+                  disabled={cargando}
+                  style={{
+                    ...estiloBoton("#6c757d", isMobile),
+                    flex: isMobile ? 1 : "none"
+                  }}
+                >
+                  {t("ui.cancel", "Cancelar")}
+                </button>
+              </div>
+            </div>
+          )}
         </>
       ) : (
         <div style={{ textAlign: "center" }}>
@@ -153,19 +214,20 @@ export default function ActualizarPlan({ currentPlan }) {
         </div>
       )}
 
+      {/* Mensaje de estado */}
       {mensaje && (
-        <p style={{ 
-          marginTop: 15, 
-          padding: isMobile ? 10 : 10, 
-          borderRadius: 6,
-          backgroundColor: mensaje.includes("éxito") || mensaje.includes("¡") ? "#d4edda" : "#f8d7da",
-          color: mensaje.includes("éxito") || mensaje.includes("¡") ? "#155724" : "#721c24",
-          border: `1px solid ${mensaje.includes("éxito") || mensaje.includes("¡") ? "#c3e6cb" : "#f5c6cb"}`,
+        <div style={{
+          padding: isMobile ? "12px 16px" : "14px 20px",
+          marginTop: 15,
+          borderRadius: 8,
+          backgroundColor: tipoMensaje === "success" ? "#d4edda" : "#f8d7da",
+          border: `1px solid ${tipoMensaje === "success" ? "#c3e6cb" : "#f5c6cb"}`,
+          color: tipoMensaje === "success" ? "#155724" : "#721c24",
           fontSize: isMobile ? 13 : 14,
-          textAlign: "center"
+          fontWeight: "500"
         }}>
           {mensaje}
-        </p>
+        </div>
       )}
     </div>
   );
@@ -177,4 +239,17 @@ const estiloContenedor = (isMobile) => ({
   borderRadius: 12,
   backgroundColor: "#fff",
   boxShadow: "0 2px 10px rgba(0,0,0,0.05)"
+});
+
+const estiloBoton = (colorFondo, isMobile) => ({
+  padding: isMobile ? "12px 16px" : "10px 20px",
+  border: "none",
+  borderRadius: 6,
+  backgroundColor: colorFondo,
+  color: "#fff",
+  cursor: "pointer",
+  fontSize: isMobile ? 14 : 14,
+  fontWeight: "500",
+  minHeight: "44px",
+  transition: "all 0.3s ease"
 });
