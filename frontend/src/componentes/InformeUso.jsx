@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export default function InformeUso({ recetas = [], userPlan }) {
   const { isMobile } = useSelector((state) => state.mobile);
+  const { t } = useTranslation();
   const recetasData = recetas || [];
   
   const totalRecetas = recetasData.length;
@@ -15,7 +17,9 @@ export default function InformeUso({ recetas = [], userPlan }) {
 
   return (
     <div style={estiloContenedor(isMobile)}>
-      <h3 style={{ margin: "0 0 15px 0", color: "#333", fontSize: isMobile ? 16 : 18 }}>Informe de uso</h3>
+      <h3 style={{ margin: "0 0 15px 0", color: "#333", fontSize: isMobile ? 16 : 18 }}>
+        Informe de uso
+      </h3>
       
       <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 15 : 20 }}>
         <div>

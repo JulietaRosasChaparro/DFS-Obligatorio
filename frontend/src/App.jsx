@@ -1,70 +1,37 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
-import { useEffect, useState } from "react";
-import { loginSuccess } from "./slices/authSlice";
-import ViewportListener from "./componentes/ViewportListener"; // Agrega esto
+import Login from './pages/Login';
+import Register from './pages/Register';
+import Dashboard from './pages/Dashboard';
+import DashboardLayout from './layout/DashboardLayout';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './styles/responsive.css';
+import NoEncontrado from './componentes/NoEncontrado';
+import { Provider } from 'react-redux';
+import store from './store/store';
+import ProtectedRoute from './componentes/ProtectedRoute';
 
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import DashboardLayout from "./layout/DashboardLayout";
-import Dashboard from "./pages/Dashboard";
-
-export default function App() {
-  const dispatch = useDispatch();
-  const { user } = useSelector((state) => state.auth);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const storedUser = localStorage.getItem("user");
-    const storedToken = localStorage.getItem("token");
-    
-    if (storedUser && storedToken) {
-      dispatch(loginSuccess({ 
-        user: JSON.parse(storedUser), 
-        token: storedToken 
-      }));
-    }
-    setLoading(false);
-  }, [dispatch]);
-
-  if (loading) {
-    return (
-      <div style={{ 
-        display: "flex", 
-        justifyContent: "center", 
-        alignItems: "center", 
-        height: "100vh",
-        fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" 
-      }}>
-        Cargando...
-      </div>
-    );
-  }
-
+const App = () => {
   return (
-    <>
-      <ViewportListener />
-      <Routes>
-        <Route 
-          path="/" 
-          element={<Navigate to={user ? "/dashboard" : "/login"} replace />} 
-        />
-        <Route
-          path="/login"
-          element={user ? <Navigate to="/dashboard" replace /> : <Login />}
-        />
-        <Route
-          path="/register"
-          element={user ? <Navigate to="/dashboard" replace /> : <Register />}
-        />
-        <Route
-          path="/dashboard/*"
-          element={user ? <DashboardLayout /> : <Navigate to="/login" replace />}
-        >
-          <Route index element={<Dashboard />} />
-        </Route>
-      </Routes>
-    </>
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          {/* Rutas públicas*/}
+          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* Rutas protegidas*/}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/dashboard" element={<DashboardLayout />}>
+              <Route index element={<Dashboard />} />
+            </Route>
+          </Route>
+          
+          {/* Ruta 404 */}
+          <Route path="*" element={<NoEncontrado />} />
+        </Routes>
+      </BrowserRouter>
+    </Provider>
   );
 }
+
+export default App;

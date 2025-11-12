@@ -26,6 +26,5 @@ const mobileSlice = createSlice({
   }
 })
 
-// Asegúrate de exportar toggleSidebar
 export const { setViewport, toggleSidebar, setTouchEnabled } = mobileSlice.actions
 export default mobileSlice.reducer

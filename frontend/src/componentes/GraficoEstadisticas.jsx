@@ -1,7 +1,9 @@
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 
 export default function GraficoEstadisticas({ recetas = [] }) {
   const { isMobile } = useSelector((state) => state.mobile);
+  const { t } = useTranslation();
   const recetasData = recetas || [];
 
   const estadisticasPorMes = recetasData.reduce((acc, receta) => {
@@ -24,7 +26,9 @@ export default function GraficoEstadisticas({ recetas = [] }) {
 
   return (
     <div style={estiloContenedor(isMobile)}>
-      <h3 style={{ margin: "0 0 15px 0", color: "#333", fontSize: isMobile ? 16 : 18 }}>Estadísticas de recetas</h3>
+      <h3 style={{ margin: "0 0 15px 0", color: "#333", fontSize: isMobile ? 16 : 18 }}>
+        Estadísticas de recetas
+      </h3>
       
       {recetasData.length === 0 ? (
         <div style={{ 
@@ -44,7 +48,6 @@ export default function GraficoEstadisticas({ recetas = [] }) {
       ) : (
         <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 15 : 20 }}>
           
-          {/* Tarjetas de resumen */}
           <div style={{ 
             display: "grid", 
             gridTemplateColumns: "1fr 1fr", 
@@ -77,16 +80,15 @@ export default function GraficoEstadisticas({ recetas = [] }) {
             </div>
           </div>
 
-          {/* Gráfico de barras mejorado */}
           {mesesConDatos.length > 0 && (
             <div style={{ 
-              padding: isMobile ? 12 : 15, 
+              padding: isMobile ? 15 : 20, 
               backgroundColor: "#f8f9fa", 
               borderRadius: 8,
               border: "1px solid #e9ecef"
             }}>
               <p style={{ 
-                margin: "0 0 12px 0", 
+                margin: "0 0 15px 0", 
                 color: "#495057", 
                 fontSize: isMobile ? 13 : 14, 
                 fontWeight: "600",
@@ -99,15 +101,32 @@ export default function GraficoEstadisticas({ recetas = [] }) {
                 display: "flex", 
                 alignItems: "end", 
                 justifyContent: "space-between",
-                height: isMobile ? 100 : 120,
-                gap: isMobile ? 6 : 8,
-                padding: "0 5px"
+                height: isMobile ? 120 : 150,
+                gap: isMobile ? 8 : 12,
+                padding: "0 5px",
+                position: "relative"
               }}>
+
+                {[0, 1, 2, 3, 4].map((line) => (
+                  <div 
+                    key={line}
+                    style={{
+                      position: "absolute",
+                      left: 0,
+                      right: 0,
+                      bottom: `${(line / 4) * 100}%`,
+                      height: "1px",
+                      backgroundColor: "#e0e0e0",
+                      zIndex: 0
+                    }}
+                  />
+                ))}
+                
                 {mesesConDatos.slice(-6).map((mes, index) => {
                   const [año, mesNum] = mes.split('-');
                   const cantidad = estadisticasPorMes[mes];
-                  const altura = (cantidad / maxRecetas) * (isMobile ? 60 : 80);
-                  const color = `hsl(${210 + index * 30}, 70%, 45%)`;
+                  const altura = (cantidad / maxRecetas) * (isMobile ? 80 : 100);
+                  const color = `hsl(${210 + index * 20}, 70%, 50%)`;
                   
                   return (
                     <div key={mes} style={{ 
@@ -115,50 +134,52 @@ export default function GraficoEstadisticas({ recetas = [] }) {
                       flexDirection: "column", 
                       alignItems: "center", 
                       flex: 1,
-                      gap: 5
+                      gap: 8,
+                      zIndex: 1
                     }}>
                       <div style={{ 
                         display: "flex", 
                         flexDirection: "column", 
                         alignItems: "center",
                         justifyContent: "end",
-                        height: isMobile ? 60 : 80
+                        height: isMobile ? 80 : 100,
+                        width: "100%"
                       }}>
                         <div
                           style={{
                             height: `${altura}px`,
                             backgroundColor: color,
-                            width: isMobile ? "60%" : "70%",
+                            width: isMobile ? "70%" : "80%",
                             borderRadius: "4px 4px 0 0",
-                            minHeight: "3px",
+                            minHeight: "8px",
                             transition: "height 0.3s ease",
-                            position: "relative"
+                            position: "relative",
+                            boxShadow: "0 2px 4px rgba(0,0,0,0.1)"
                           }}
                         >
-                          {/* Etiqueta con cantidad */}
                           <div style={{
                             position: "absolute",
-                            top: -20,
+                            top: -25,
                             left: "50%",
                             transform: "translateX(-50%)",
                             backgroundColor: "#495057",
                             color: "white",
-                            padding: "2px 6px",
+                            padding: "3px 8px",
                             borderRadius: 4,
-                            fontSize: isMobile ? 9 : 10,
+                            fontSize: isMobile ? 10 : 11,
                             fontWeight: "bold",
-                            whiteSpace: "nowrap"
+                            whiteSpace: "nowrap",
+                            boxShadow: "0 1px 3px rgba(0,0,0,0.2)"
                           }}>
                             {cantidad}
                           </div>
                         </div>
                       </div>
-                      
-                      {/* Etiqueta del mes */}
+
                       <span style={{ 
-                        fontSize: isMobile ? 10 : 11, 
-                        color: "#6c757d", 
-                        fontWeight: "500",
+                        fontSize: isMobile ? 11 : 12, 
+                        color: "#495057", 
+                        fontWeight: "600",
                         textAlign: "center"
                       }}>
                         {nombresMeses[parseInt(mesNum)]}
@@ -167,29 +188,46 @@ export default function GraficoEstadisticas({ recetas = [] }) {
                   );
                 })}
               </div>
+              
+              <div style={{
+                height: "1px",
+                backgroundColor: "#adb5bd",
+                marginTop: "10px",
+                position: "relative"
+              }}>
+                <div style={{
+                  position: "absolute",
+                  right: 0,
+                  top: -15,
+                  fontSize: isMobile ? 9 : 10,
+                  color: "#6c757d"
+                }}>
+                  Meses →
+                </div>
+              </div>
             </div>
           )}
 
-          {/* Información adicional */}
           <div style={{ 
             padding: isMobile ? 12 : 15, 
             backgroundColor: "#fff3cd", 
             borderRadius: 8,
-            border: "1px solid #ffeaa7"
+            border: "1px solid #ffeaa7",
+            display: "flex",
+            alignItems: "center",
+            gap: 10
           }}>
-            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ fontSize: isMobile ? 14 : 16 }}>📊</span>
-              <div>
-                <p style={{ margin: 0, fontSize: isMobile ? 12 : 12, color: "#856404", fontWeight: "500" }}>
-                  Promedio mensual
-                </p>
-                <p style={{ margin: 0, fontSize: isMobile ? 11 : 11, color: "#997404" }}>
-                  {mesesConDatos.length > 0 
-                    ? `${(recetasData.length / mesesConDatos.length).toFixed(1)} recetas por mes`
-                    : "Sin datos suficientes"
-                  }
-                </p>
-              </div>
+            <span style={{ fontSize: isMobile ? 16 : 18 }}>📊</span>
+            <div style={{ flex: 1 }}>
+              <p style={{ margin: 0, fontSize: isMobile ? 12 : 13, color: "#856404", fontWeight: "500" }}>
+                Promedio mensual
+              </p>
+              <p style={{ margin: 0, fontSize: isMobile ? 14 : 16, color: "#997404", fontWeight: "bold" }}>
+                {mesesConDatos.length > 0 
+                  ? `${(recetasData.length / mesesConDatos.length).toFixed(1)} recetas por mes`
+                  : "Sin datos suficientes"
+                }
+              </p>
             </div>
           </div>
 

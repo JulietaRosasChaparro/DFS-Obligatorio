@@ -1,12 +1,11 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import FormularioReceta from "../componentes/FormularioReceta";
 import ListaRecetas from "../componentes/ListaRecetas";
 import InformeUso from "../componentes/InformeUso";
 import ActualizarPlan from "../componentes/ActualizarPlan";
 import GraficoEstadisticas from "../componentes/GraficoEstadisticas";
-import { traducirError, textosCarga } from "../utils/traducciones";
-
 import { API_ENDPOINTS } from '../config/api';
 
 export default function Dashboard() {
@@ -15,8 +14,8 @@ export default function Dashboard() {
   const [recetas, setRecetas] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState("");
+  const { t } = useTranslation();
 
-  // Cargar recetas del usuario al montar el componente
   useEffect(() => {
     obtenerRecetasUsuario();
   }, []);
@@ -37,16 +36,34 @@ export default function Dashboard() {
         setRecetas(data);
       } else {
         const errorData = await res.json();
-        const errorTraducido = traducirError(errorData.error);
+        const errorTraducido = t(`errors.${obtenerClaveError(errorData.error)}`, errorData.error);
         setError(errorTraducido);
       }
     } catch (error) {
-      const errorTraducido = traducirError(error.message);
+      const errorTraducido = t(`errors.${obtenerClaveError(error.message)}`, error.message);
       console.error("Error cargando recetas:", errorTraducido);
       setError(errorTraducido);
     } finally {
       setCargando(false);
     }
+  };
+
+  const obtenerClaveError = (mensajeError) => {
+    if (!mensajeError) return "generic.somethingWrong";
+    
+    const mensaje = mensajeError.toLowerCase();
+    
+    if (mensaje.includes("unauthorized") || mensaje.includes("no autorizado")) {
+      return "auth.unauthorized";
+    }
+    if (mensaje.includes("not found") || mensaje.includes("no encontrado")) {
+      return "connection.notFound";
+    }
+    if (mensaje.includes("network") || mensaje.includes("failed to fetch")) {
+      return "connection.network";
+    }
+    
+    return "generic.somethingWrong";
   };
 
   const manejarRecetaAgregada = (nuevaReceta) => {
@@ -78,7 +95,7 @@ export default function Dashboard() {
         fontFamily: "'Segoe UI', Tahoma, Geneva, Verdana, sans-serif" 
       }}>
         <div style={{ textAlign: "center" }}>
-          <p style={{ color: "#666", fontSize: isMobile ? 14 : 16 }}>{textosCarga.cargando}</p>
+          <p style={{ color: "#666", fontSize: isMobile ? 14 : 16 }}>{t("loading.loading")}</p>
         </div>
       </div>
     );
@@ -90,7 +107,7 @@ export default function Dashboard() {
       minHeight: "100vh", 
       backgroundColor: "#f8f9fa" 
     }}>
-      {/* Header */}
+
       <div style={{ 
         marginBottom: isMobile ? 20 : 30,
         padding: isMobile ? 15 : 20,
@@ -175,14 +192,13 @@ export default function Dashboard() {
         </div>
       )}
 
-      {/* Grid Principal - Responsivo */}
       <div style={{ 
         display: "grid", 
         gridTemplateColumns: isMobile ? "1fr" : "1fr 1fr", 
         gap: isMobile ? 15 : 20,
         marginBottom: isMobile ? 20 : 30 
       }}>
-        {/* Columna izquierda */}
+
         <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 15 : 20 }}>
           <FormularioReceta 
             onRecetaAdded={manejarRecetaAgregada}
@@ -198,14 +214,12 @@ export default function Dashboard() {
           />
         </div>
 
-        {/* Columna derecha */}
         <div style={{ display: "flex", flexDirection: "column", gap: isMobile ? 15 : 20 }}>
           <ActualizarPlan currentPlan={user?.plan || "plus"} isMobile={isMobile} />
           <GraficoEstadisticas recetas={recetas} isMobile={isMobile} />
         </div>
       </div>
 
-      {/* Lista de recetas */}
       <div style={{
         padding: isMobile ? 15 : 20,
         backgroundColor: "#fff",
@@ -221,7 +235,6 @@ export default function Dashboard() {
         />
       </div>
 
-      {/* Footer informativo */}
       <div style={{ 
         marginTop: isMobile ? 20 : 30,
         padding: 15,

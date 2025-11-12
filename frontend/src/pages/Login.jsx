@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { loginStart, loginSuccess, loginFailure } from "../slices/authSlice";
 import { useNavigate, Link } from "react-router-dom";
-import { traducirError, textosCarga, textosValidacion } from "../utils/traducciones";
-
 import { API_ENDPOINTS } from '../config/api';
 
 export default function Login() {
@@ -11,6 +10,7 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const { isMobile } = useSelector((state) => state.mobile);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -27,7 +27,7 @@ export default function Login() {
     setErrorMsg("");
 
     if (!username || !password) {
-      setErrorMsg("Usuario y contraseña son requeridos");
+      setErrorMsg(t("validation.required"));
       return;
     }
 
@@ -43,7 +43,7 @@ export default function Login() {
       const data = await res.json();
       
       if (!res.ok) {
-        throw new Error(data.error || "Error al iniciar sesión");
+        throw new Error(data.error || t("errors.generic.somethingWrong"));
       }
 
       localStorage.setItem("user", JSON.stringify(data.user));
@@ -53,10 +53,31 @@ export default function Login() {
       navigate("/dashboard", { replace: true });
 
     } catch (err) {
-      const errorTraducido = traducirError(err.message);
+      const errorTraducido = t(`errors.${obtenerClaveError(err.message)}`, err.message);
       dispatch(loginFailure(errorTraducido));
       setErrorMsg(errorTraducido);
     }
+  };
+
+  const obtenerClaveError = (mensajeError) => {
+    if (!mensajeError) return "generic.somethingWrong";
+    
+    const mensaje = mensajeError.toLowerCase();
+    
+    if (mensaje.includes('invalid credentials') || mensaje.includes('invalid password')) {
+      return "auth.invalidCredentials";
+    }
+    if (mensaje.includes('user not found') || mensaje.includes('usuario no encontrado')) {
+      return "auth.userNotFound";
+    }
+    if (mensaje.includes('incorrect password')) {
+      return "auth.incorrectPassword";
+    }
+    if (mensaje.includes('unauthorized') || mensaje.includes('no autorizado')) {
+      return "auth.unauthorized";
+    }
+    
+    return "generic.somethingWrong";
   };
 
   const disabled = !username || !password || loading;
@@ -79,19 +100,19 @@ export default function Login() {
         color: "#333",
         fontSize: isMobile ? 20 : 24
       }}>
-        Iniciar sesión
+        {t("ui.login", "Iniciar sesión")}
       </h2>
 
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: isMobile ? 12 : 15 }}>
         <input
-          placeholder="Usuario"
+          placeholder={t("ui.username", "Usuario")}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           style={inputStyle(isMobile)}
         />
         <input
           type="password"
-          placeholder="Contraseña"
+          placeholder={t("ui.password", "Contraseña")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={inputStyle(isMobile)}
@@ -113,7 +134,7 @@ export default function Login() {
             minHeight: "44px"
           }}
         >
-          {loading ? textosCarga.ingresando : "Ingresar"}
+          {loading ? t("loading.loggingIn") : t("ui.login", "Ingresar")}
         </button>
       </form>
 
@@ -133,7 +154,7 @@ export default function Login() {
         textAlign: "center", 
         fontSize: isMobile ? 13 : 14 
       }}>
-        ¿No tenés cuenta? <Link to="/register" style={{ color: "#007bff" }}>Registrarse</Link>
+        {t("ui.noAccount", "¿No tenés cuenta?")} <Link to="/register" style={{ color: "#007bff" }}>{t("ui.register", "Registrarse")}</Link>
       </p>
     </div>
   );

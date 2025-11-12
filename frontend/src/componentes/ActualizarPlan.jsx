@@ -1,8 +1,7 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { loginSuccess } from "../slices/authSlice";
-import { traducirError, textosCarga, textosExito, textosConfirmacion } from "../utils/traducciones";
-
 import { API_ENDPOINTS } from "../config/api";
 
 export default function ActualizarPlan({ currentPlan }) {
@@ -10,19 +9,20 @@ export default function ActualizarPlan({ currentPlan }) {
   const [cargando, setCargando] = useState(false);
   const [mensaje, setMensaje] = useState("");
   const dispatch = useDispatch();
+  const { t } = useTranslation();
 
   const manejarActualizacion = async () => {
     if (currentPlan === "premium") {
-      setMensaje("Ya tienes plan Premium");
+      setMensaje(t("errors.plans.alreadyPremium"));
       return;
     }
 
     if (currentPlan !== "plus") {
-      setMensaje("Solo se puede cambiar de plan plus a premium");
+      setMensaje(t("errors.plans.onlyPlusToPremium"));
       return;
     }
 
-    if (!window.confirm(textosConfirmacion.cambiarPlan)) {
+    if (!window.confirm(t("confirmation.changePlan"))) {
       return;
     }
 
@@ -55,14 +55,38 @@ export default function ActualizarPlan({ currentPlan }) {
       localStorage.setItem("user", JSON.stringify(usuarioActualizado));
       dispatch(loginSuccess({ user: usuarioActualizado, token }));
       
-      setMensaje(textosExito.planActualizado);
+      setMensaje(t("success.planUpdated"));
       
     } catch (error) {
-      const errorTraducido = traducirError(error.message);
+      const errorTraducido = t(`errors.${obtenerClaveError(error.message)}`, error.message);
       setMensaje(errorTraducido);
     } finally {
       setCargando(false);
     }
+  };
+
+  const obtenerClaveError = (mensajeError) => {
+    if (!mensajeError) return "generic.somethingWrong";
+    
+    const mensaje = mensajeError.toLowerCase();
+    
+    if (mensaje.includes("solo se puede cambiar de plan plus a premium")) {
+      return "plans.onlyPlusToPremium";
+    }
+    if (mensaje.includes("ya tienes plan premium")) {
+      return "plans.alreadyPremium";
+    }
+    if (mensaje.includes("plan upgrade not allowed")) {
+      return "plans.upgradeNotAllowed";
+    }
+    if (mensaje.includes("unauthorized") || mensaje.includes("no autorizado")) {
+      return "auth.unauthorized";
+    }
+    if (mensaje.includes("network") || mensaje.includes("failed to fetch")) {
+      return "connection.network";
+    }
+    
+    return "generic.somethingWrong";
   };
 
   return (
@@ -115,7 +139,7 @@ export default function ActualizarPlan({ currentPlan }) {
               minHeight: "44px"
             }}
           >
-            {cargando ? textosCarga.procesando : "🎯 Actualizar a Premium"}
+            {cargando ? t("loading.processing") : "🎯 Actualizar a Premium"}
           </button>
         </>
       ) : (

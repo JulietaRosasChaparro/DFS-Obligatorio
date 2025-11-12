@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useTranslation } from "react-i18next";
 import { loginStart, loginSuccess, loginFailure } from "../slices/authSlice";
 import { useNavigate, Link } from "react-router-dom";
-import { traducirError, textosCarga, textosValidacion } from "../utils/traducciones";
-
 import { API_ENDPOINTS } from '../config/api';
 
 export default function Register() {
@@ -13,6 +12,7 @@ export default function Register() {
   const [repeatPassword, setRepeatPassword] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
   const { isMobile } = useSelector((state) => state.mobile);
+  const { t } = useTranslation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -29,12 +29,12 @@ export default function Register() {
     setErrorMsg("");
 
     if (password !== repeatPassword) {
-      setErrorMsg(textosValidacion.passwordsNoCoinciden);
+      setErrorMsg(t("validation.passwordsDontMatch"));
       return;
     }
 
     if (password.length < 6) {
-      setErrorMsg(textosValidacion.passwordCorta);
+      setErrorMsg(t("validation.shortPassword"));
       return;
     }
 
@@ -50,7 +50,7 @@ export default function Register() {
       const data = await res.json();
       
       if (!res.ok) {
-        throw new Error(data.error || "Error en el registro");
+        throw new Error(data.error || t("errors.generic.somethingWrong"));
       }
 
       localStorage.setItem("user", JSON.stringify(data.user));
@@ -60,10 +60,37 @@ export default function Register() {
       navigate("/dashboard", { replace: true });
 
     } catch (err) {
-      const errorTraducido = traducirError(err.message);
+      const errorTraducido = t(`errors.${obtenerClaveError(err.message)}`, err.message);
       dispatch(loginFailure(errorTraducido));
       setErrorMsg(errorTraducido);
     }
+  };
+
+  const obtenerClaveError = (mensajeError) => {
+    if (!mensajeError) return "generic.somethingWrong";
+    
+    const mensaje = mensajeError.toLowerCase();
+    
+    if (mensaje.includes('username already exists') || mensaje.includes('usuario ya existe')) {
+      return "register.usernameExists";
+    }
+    if (mensaje.includes('email already exists') || mensaje.includes('email ya existe')) {
+      return "register.emailExists";
+    }
+    if (mensaje.includes('username is required') || mensaje.includes('username required')) {
+      return "register.usernameRequired";
+    }
+    if (mensaje.includes('email is required') || mensaje.includes('email required')) {
+      return "register.emailRequired";
+    }
+    if (mensaje.includes('password is required') || mensaje.includes('password required')) {
+      return "register.passwordRequired";
+    }
+    if (mensaje.includes('invalid email') || mensaje.includes('email inválido')) {
+      return "register.invalidEmail";
+    }
+    
+    return "generic.somethingWrong";
   };
 
   const disabled = !username || !email || !password || !repeatPassword || password !== repeatPassword || loading;
@@ -86,12 +113,12 @@ export default function Register() {
         color: "#333",
         fontSize: isMobile ? 20 : 24
       }}>
-        Registrarse
+        {t("ui.register", "Registrarse")}
       </h2>
 
       <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: isMobile ? 12 : 15 }}>
         <input
-          placeholder="Nombre de usuario"
+          placeholder={t("ui.username", "Nombre de usuario")}
           value={username}
           onChange={(e) => setUsername(e.target.value)}
           style={inputStyle(isMobile)}
@@ -100,7 +127,7 @@ export default function Register() {
         />
         <input
           type="email"
-          placeholder="Email"
+          placeholder={t("ui.email", "Email")}
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           style={inputStyle(isMobile)}
@@ -109,7 +136,7 @@ export default function Register() {
         />
         <input
           type="password"
-          placeholder="Contraseña"
+          placeholder={t("ui.password", "Contraseña")}
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           style={inputStyle(isMobile)}
@@ -118,7 +145,7 @@ export default function Register() {
         />
         <input
           type="password"
-          placeholder="Repetir contraseña"
+          placeholder={t("ui.repeatPassword", "Repetir contraseña")}
           value={repeatPassword}
           onChange={(e) => setRepeatPassword(e.target.value)}
           style={inputStyle(isMobile)}
@@ -142,7 +169,7 @@ export default function Register() {
             minHeight: "44px"
           }}
         >
-          {loading ? textosCarga.registrando : "Registrarse"}
+          {loading ? t("loading.registering") : t("ui.register", "Registrarse")}
         </button>
       </form>
 
@@ -162,7 +189,7 @@ export default function Register() {
         textAlign: "center", 
         fontSize: isMobile ? 13 : 14 
       }}>
-        ¿Ya tenés cuenta? <Link to="/login" style={{ color: "#007bff" }}>Ingresar</Link>
+        {t("ui.haveAccount", "¿Ya tenés cuenta?")} <Link to="/login" style={{ color: "#007bff" }}>{t("ui.login", "Ingresar")}</Link>
       </p>
     </div>
   );

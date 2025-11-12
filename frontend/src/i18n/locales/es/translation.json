@@ -1,0 +1,141 @@
+{
+  "errors": {
+    "auth": {
+      "invalidCredentials": "Usuario o contraseña incorrectos",
+      "userNotFound": "Usuario no encontrado",
+      "incorrectPassword": "Contraseña incorrecta",
+      "invalidToken": "Sesión inválida. Por favor, inicia sesión nuevamente",
+      "expiredToken": "Sesión expirada. Por favor, inicia sesión nuevamente",
+      "unauthorized": "No autorizado. Por favor, inicia sesión",
+      "authFailed": "Error de autenticación"
+    },
+    "register": {
+      "usernameExists": "El nombre de usuario ya está en uso",
+      "emailExists": "El email ya está registrado",
+      "usernameRequired": "El nombre de usuario es requerido",
+      "emailRequired": "El email es requerido",
+      "passwordRequired": "La contraseña es requerida",
+      "invalidEmail": "El formato del email es inválido",
+      "shortPassword": "La contraseña debe tener al menos 6 caracteres"
+    },
+    "recipes": {
+      "limitReached": "Has alcanzado el límite de recetas para tu plan. Actualiza a Premium para recetas ilimitadas.",
+      "notFound": "Receta no encontrada",
+      "notAuthorized": "No tienes permisos para realizar esta acción",
+      "titleRequired": "El título de la receta es requerido",
+      "ingredientsRequired": "Los ingredientes son requeridos",
+      "stepsRequired": "Los pasos de preparación son requeridos"
+    },
+    "plans": {
+      "onlyPlusToPremium": "Solo puedes cambiar de plan Plus a Premium",
+      "alreadyPremium": "Ya tienes plan Premium",
+      "upgradeNotAllowed": "No puedes cambiar de plan en este momento"
+    },
+    "images": {
+      "invalidFormat": "Formato de imagen no válido. Use JPEG, PNG, GIF o WebP",
+      "tooLarge": "La imagen no puede ser mayor a 5MB",
+      "updateError": "Error al actualizar la imagen de perfil",
+      "notFound": "Imagen no encontrada",
+      "processingError": "No se puede procesar la imagen. Intenta con otra imagen"
+    },
+    "validation": {
+      "failed": "Error de validación en los datos enviados",
+      "requiredField": "Campo requerido faltante",
+      "invalidInput": "Datos de entrada inválidos"
+    },
+    "connection": {
+      "network": "Error de conexión. Verifica tu internet e intenta nuevamente.",
+      "timeout": "El servidor tardó demasiado en responder. Intenta nuevamente.",
+      "internal": "Error interno del servidor. Por favor, intenta más tarde.",
+      "unavailable": "Servicio no disponible temporalmente",
+      "badRequest": "Solicitud incorrecta. Verifica los datos enviados.",
+      "notFound": "Recurso no encontrado",
+      "forbidden": "Acceso denegado"
+    },
+    "database": {
+      "error": "Error de base de datos. Por favor, intenta más tarde.",
+      "duplicate": "Ya existe un registro con esos datos"
+    },
+    "generic": {
+      "somethingWrong": "Algo salió mal. Por favor, intenta nuevamente.",
+      "unexpected": "Error inesperado. Por favor, contacta al soporte."
+    }
+  },
+  "loading": {
+    "loading": "Cargando...",
+    "processing": "Procesando...",
+    "creating": "Creando...",
+    "saving": "Guardando...",
+    "deleting": "Eliminando...",
+    "updating": "Actualizando...",
+    "registering": "Registrando...",
+    "loggingIn": "Ingresando...",
+    "uploading": "Subiendo...",
+    "downloading": "Descargando...",
+    "processingImage": "Procesando imagen...",
+    "uploadingImage": "Subiendo imagen..."
+  },
+  "success": {
+    "register": "¡Registro exitoso! Redirigiendo...",
+    "login": "¡Inicio de sesión exitoso!",
+    "recipeCreated": "¡Receta creada exitosamente!",
+    "recipeUpdated": "¡Receta actualizada exitosamente!",
+    "recipeDeleted": "Receta eliminada exitosamente",
+    "planUpdated": "¡Plan actualizado a Premium exitosamente!",
+    "changesSaved": "Cambios guardados exitosamente",
+    "actionCompleted": "Acción completada exitosamente",
+    "profileUpdated": "Perfil actualizado exitosamente",
+    "imageUpdated": "Imagen de perfil actualizada con éxito",
+    "imageDeleted": "Imagen de perfil eliminada exitosamente"
+  },
+  "validation": {
+    "required": "Este campo es requerido",
+    "invalidEmail": "El formato del email es inválido",
+    "shortPassword": "La contraseña debe tener al menos 6 caracteres",
+    "passwordsDontMatch": "Las contraseñas no coinciden",
+    "usernameRequired": "El nombre de usuario es requerido",
+    "titleRequired": "El título es requerido",
+    "ingredientsRequired": "Los ingredientes son requeridos",
+    "stepsRequired": "Los pasos de preparación son requeridos",
+    "imageRequired": "La imagen es requerida",
+    "invalidImageFormat": "Formato de imagen no válido",
+    "imageTooLarge": "La imagen es demasiado grande"
+  },
+  "ui": {
+    "welcome": "Bienvenido",
+    "logout": "Cerrar sesión",
+    "myProfile": "Mi perfil",
+    "settings": "Configuración",
+    "search": "Buscar...",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "viewAll": "Ver todo",
+    "viewMore": "Ver más",
+    "viewLess": "Ver menos",
+    "accept": "Aceptar",
+    "cancel": "Cancelar",
+    "confirm": "Confirmar",
+    "continue": "Continuar",
+    "back": "Atrás",
+    "next": "Siguiente",
+    "finish": "Finalizar",
+    "changeImage": "Cambiar imagen",
+    "deleteImage": "Eliminar imagen",
+    "uploadImage": "Subir imagen",
+    "dragImage": "Arrastrar imagen aquí",
+    "preview": "Vista previa",
+    "selectImage": "Seleccionar imagen"
+  },
+  "confirmation": {
+    "deleteRecipe": "¿Estás seguro de que quieres eliminar esta receta?",
+    "changePlan": "¿Estás seguro de que quieres cambiar a plan Premium?",
+    "deleteImage": "¿Estás seguro de que quieres eliminar la imagen de perfil?",
+    "changeImage": "¿Estás seguro de que quieres cambiar la imagen de perfil?"
+  },
+  "info": {
+    "imageFormats": "Formatos soportados: JPEG, PNG, GIF, WebP",
+    "maxSize": "Tamaño máximo: 5MB",
+    "imageRecommendation": "Recomendación: Use imágenes cuadradas para mejor visualización",
+    "processingImage": "La imagen se está procesando para optimizar su tamaño y calidad"
+  }
+}

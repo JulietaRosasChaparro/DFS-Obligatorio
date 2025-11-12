@@ -1,0 +1,141 @@
+{
+  "errors": {
+    "auth": {
+      "invalidCredentials": "Incorrect username or password",
+      "userNotFound": "User not found",
+      "incorrectPassword": "Incorrect password",
+      "invalidToken": "Invalid session. Please log in again",
+      "expiredToken": "Session expired. Please log in again",
+      "unauthorized": "Unauthorized. Please log in",
+      "authFailed": "Authentication error"
+    },
+    "register": {
+      "usernameExists": "Username already exists",
+      "emailExists": "Email already registered",
+      "usernameRequired": "Username is required",
+      "emailRequired": "Email is required",
+      "passwordRequired": "Password is required",
+      "invalidEmail": "Invalid email format",
+      "shortPassword": "Password must be at least 6 characters"
+    },
+    "recipes": {
+      "limitReached": "You have reached the recipe limit for your plan. Upgrade to Premium for unlimited recipes.",
+      "notFound": "Recipe not found",
+      "notAuthorized": "You don't have permission to perform this action",
+      "titleRequired": "Recipe title is required",
+      "ingredientsRequired": "Ingredients are required",
+      "stepsRequired": "Preparation steps are required"
+    },
+    "plans": {
+      "onlyPlusToPremium": "You can only change from Plus to Premium plan",
+      "alreadyPremium": "You already have Premium plan",
+      "upgradeNotAllowed": "Cannot change plan at this time"
+    },
+    "images": {
+      "invalidFormat": "Invalid image format. Use JPEG, PNG, GIF or WebP",
+      "tooLarge": "Image cannot be larger than 5MB",
+      "updateError": "Error updating profile image",
+      "notFound": "Image not found",
+      "processingError": "Cannot process image. Try with another image"
+    },
+    "validation": {
+      "failed": "Validation error in submitted data",
+      "requiredField": "Missing required field",
+      "invalidInput": "Invalid input data"
+    },
+    "connection": {
+      "network": "Connection error. Check your internet and try again.",
+      "timeout": "Server took too long to respond. Try again.",
+      "internal": "Internal server error. Please try again later.",
+      "unavailable": "Service temporarily unavailable",
+      "badRequest": "Incorrect request. Check the submitted data.",
+      "notFound": "Resource not found",
+      "forbidden": "Access denied"
+    },
+    "database": {
+      "error": "Database error. Please try again later.",
+      "duplicate": "A record with that data already exists"
+    },
+    "generic": {
+      "somethingWrong": "Something went wrong. Please try again.",
+      "unexpected": "Unexpected error. Please contact support."
+    }
+  },
+  "loading": {
+    "loading": "Loading...",
+    "processing": "Processing...",
+    "creating": "Creating...",
+    "saving": "Saving...",
+    "deleting": "Deleting...",
+    "updating": "Updating...",
+    "registering": "Registering...",
+    "loggingIn": "Logging in...",
+    "uploading": "Uploading...",
+    "downloading": "Downloading...",
+    "processingImage": "Processing image...",
+    "uploadingImage": "Uploading image..."
+  },
+  "success": {
+    "register": "Successful registration! Redirecting...",
+    "login": "Successful login!",
+    "recipeCreated": "Recipe created successfully!",
+    "recipeUpdated": "Recipe updated successfully!",
+    "recipeDeleted": "Recipe deleted successfully",
+    "planUpdated": "Plan updated to Premium successfully!",
+    "changesSaved": "Changes saved successfully",
+    "actionCompleted": "Action completed successfully",
+    "profileUpdated": "Profile updated successfully",
+    "imageUpdated": "Profile image updated successfully",
+    "imageDeleted": "Profile image deleted successfully"
+  },
+  "validation": {
+    "required": "This field is required",
+    "invalidEmail": "Invalid email format",
+    "shortPassword": "Password must be at least 6 characters",
+    "passwordsDontMatch": "Passwords don't match",
+    "usernameRequired": "Username is required",
+    "titleRequired": "Title is required",
+    "ingredientsRequired": "Ingredients are required",
+    "stepsRequired": "Preparation steps are required",
+    "imageRequired": "Image is required",
+    "invalidImageFormat": "Invalid image format",
+    "imageTooLarge": "Image is too large"
+  },
+  "ui": {
+    "welcome": "Welcome",
+    "logout": "Log out",
+    "myProfile": "My profile",
+    "settings": "Settings",
+    "search": "Search...",
+    "filter": "Filter",
+    "sort": "Sort",
+    "viewAll": "View all",
+    "viewMore": "View more",
+    "viewLess": "View less",
+    "accept": "Accept",
+    "cancel": "Cancel",
+    "confirm": "Confirm",
+    "continue": "Continue",
+    "back": "Back",
+    "next": "Next",
+    "finish": "Finish",
+    "changeImage": "Change image",
+    "deleteImage": "Delete image",
+    "uploadImage": "Upload image",
+    "dragImage": "Drag image here",
+    "preview": "Preview",
+    "selectImage": "Select image"
+  },
+  "confirmation": {
+    "deleteRecipe": "Are you sure you want to delete this recipe?",
+    "changePlan": "Are you sure you want to change to Premium plan?",
+    "deleteImage": "Are you sure you want to delete the profile image?",
+    "changeImage": "Are you sure you want to change the profile image?"
+  },
+  "info": {
+    "imageFormats": "Supported formats: JPEG, PNG, GIF, WebP",
+    "maxSize": "Maximum size: 5MB",
+    "imageRecommendation": "Recommendation: Use square images for better display",
+    "processingImage": "The image is being processed to optimize its size and quality"
+  }
+}

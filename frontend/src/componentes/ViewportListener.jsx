@@ -9,8 +9,6 @@ export default function ViewportListener() {
     const handleResize = () => {
       dispatch(setViewport())
     }
-
-    // Configurar listeners
     window.addEventListener('resize', handleResize)
     window.addEventListener('orientationchange', handleResize)
     
@@ -20,5 +18,5 @@ export default function ViewportListener() {
     }
   }, [dispatch])
 
-  return null // Este componente no renderiza nada
+  return null
 }
